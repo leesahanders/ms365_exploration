@@ -1,0 +1,75 @@
+---
+title: "client_rmarkdown"
+output: html_document
+date: '2022-07-25'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(Microsoft365R)
+library(DT)
+library(pins)
+library(dplyr)
+
+```
+
+
+# Authentication to Microsoft Azure
+
+```{r}
+#tenant = "b721d4a7-5012-49a6-8574-c2d52e59001b"
+site_url = "https://rstudioinc.sharepoint.com/sites/integrations-testing"
+app="29f4ba1e-3dd5-4f97-a94f-98c68497a9cc"
+drive_name = "Documents"
+file_src = "penguins_raw.csv"
+
+site <- get_sharepoint_site(site_url = site_url, app=app, auth_type="device_code")
+
+doclib <- site$get_drive()
+```
+
+# Downloading file locally and displaying it
+
+Reference: https://cran.r-project.org/web/packages/Microsoft365R/vignettes/od_sp.html
+
+```{r}
+
+# Note the function get_drive() uses drive_id as a parameter (NOT drive name)
+drv <- site$get_drive(drive_name)
+
+# Downloading the file:
+drv$download_file(src = file_src, dest = "tmp.csv", overwrite = TRUE)
+
+# Reading file into memory (it would be a good idea to have handling here for detecting file type)
+data <- read.csv(file="tmp.csv", stringsAsFactors = FALSE, check.names=F)
+
+datatable(data, class = 'cell-border stripe')
+
+```
+
+
+# Pinning a file / board
+
+Reference: https://pins.rstudio.com/reference/board_ms365.html#ref-examples 
+
+This approach allows for use of Microsoft resources for pinning content. I don't think this allows for access to existing content within Microsoft unless it has been saved using the pin format (so it wouldn't be a good choice for say if users are uploading files to Sharepoint manually and then there is a programmatic script parsing them to reupload an aggregate/analysis). 
+
+
+```{r}
+# Let's connect ms365 as a pinned board. If this folder doesn't already exist it will be created. 
+board <- board_ms365(drive = doclib, "general/project1/board")
+
+# Write a dataset as a pin to Sharepoint
+board %>% pin_write(iris, "iris", description = "This is a test")
+
+# View the metadat of the pin we just created 
+board %>% pin_meta("iris")
+
+# Read a pin
+test <- board %>% pin_read("iris")
+
+```
+
+
+
