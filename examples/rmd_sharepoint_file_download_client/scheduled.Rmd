@@ -1,0 +1,79 @@
+---
+title: "client_rmarkdown"
+output: html_document
+date: '2022-07-25'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#https://rdrr.io/cran/Microsoft365R/f/vignettes/shiny.Rmd
+
+# Example using Client Credentials / Client Secret Flow as described in the 'Service Principal' section in https://cran.r-project.org/web/packages/Microsoft365R/vignettes/scripted.html 
+# Authentication and requirements from Azure side (app set up) described in https://cran.r-project.org/web/packages/AzureGraph/vignettes/auth.html 
+# Access to Sharepoint and how to use the various functions described under `Creating a custom app registration` in https://cran.r-project.org/web/packages/Microsoft365R/vignettes/od_sp.html and the API permissions listed under https://github.com/Azure/Microsoft365R/blob/master/inst/app_registration.md
+
+library(AzureAuth)
+library(AzureGraph)
+library(Microsoft365R)
+library(DT)
+
+```
+
+
+```{r}
+
+tenant = "b721d4a7-5012-49a6-8574-c2d52e59001b"
+site_url = "https://rstudioinc.sharepoint.com/sites/integrations-testing"
+app="29f4ba1e-3dd5-4f97-a94f-98c68497a9cc"
+drive_name = "Documents"
+file_src = "penguins_raw.csv"
+
+# # - you should NEVER put secrets in code and instead do client_secret <- Sys.getenv("EXAMPLE_SHINY_CLIENT_SECRET", "")
+client_secret <- Sys.getenv("EXAMPLE_SHINY_CLIENT_SECRET", "")
+
+foo <- function() {
+  message("Microsoft Graph login and data pull")
+  
+  create_AzureR_dir()
+  message(AzureR_dir())
+  
+  #The Azure Active Directory tenant for which to obtain a login client. Can be a name ("myaadtenant"), a fully qualified domain name ("myaadtenant.onmicrosoft.com" or "mycompanyname.com"), or a GUID. The default is to login via the "common" tenant, which will infer your actual tenant from your credentials.
+  # https://rdrr.io/github/Azure/AzureAuth/man/AzureR_dir.html
+  
+  # create a Microsoft Graph login
+  gr <- create_graph_login(tenant, app, password=client_secret, auth_type="client_credentials")
+
+  # Sharepoint site
+  site <- gr$get_sharepoint_site(site_url)
+
+  # Note the function get_drive() uses drive_id as a parameter (NOT drive name)
+  drv <- site$get_drive(drive_name)
+
+  # Downloading the file:
+  drv$download_file(src = file_src, dest = "tmp.csv", overwrite = TRUE)
+
+  # Reading file into memory (it would be a good idea to have handling here for detecting file type)
+  data <- read.csv(file="tmp.csv", stringsAsFactors = FALSE, check.names=F)
+
+  return(data)
+}
+
+#### The AzureR packages save your login sessions so that you don’t need to reauthenticate each time. If you’re experiencing authentication failures, you can try clearing the saved data by running the following code:
+#   
+# AzureAuth::clean_token_directory()
+# AzureGraph::delete_graph_login(tenant="mytenant")
+
+```
+
+
+```{r}
+data <- foo()
+```
+
+```{r}
+datatable(data, class = 'cell-border stripe')
+```
+
+
+
