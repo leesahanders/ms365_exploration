@@ -1,6 +1,6 @@
 # ms365_exploration
 
-> :warning: This is a work in progress with various notes on trying to connect the RStudio Pro products with data stored in Sharepoint. All notes below are a stream of consciousness, please come back later for this to be updated once I (hopefully) understand something worth sharing. It is possible (likely) that I am misunderstanding capabilities listed below so read at your own risk. Also anything actually well written was probably taken from the documentation from one of the amazing packages I'm playing with - credit where credit is due (Microsoft365R, rsconnect, pins, etc). 
+> :warning: This is a work in progress with various notes on trying to connect the RStudio Pro products with data stored in Sharepoint. All notes below are a stream of consciousness, please come back later for this to be updated once I (hopefully) understand something worth sharing. It is possible (likely) that I am misunderstanding capabilities listed below so read at your own risk. Also anything actually well written was probably taken from the documentation from one of the amazing packages I'm playing with - credit where credit is due (Microsoft365R, rsconnect, pins, etc).
 
 The critical distinction to emphasize is the approach options for interactive content (where a user / viewer is available for pass-through authentication or interactive authentication) versus the approach options for non-interactive content (where content is being run without a user/ viewer available or a user is not available for authenticating to the service).
 
@@ -12,11 +12,6 @@ For deep dives into the various approaches the below resources have been super u
 
 For user authentication into systems refer to the Marketplace offering at <https://azuremarketplace.microsoft.com/en-us/marketplace/apps/aad.rstudioconnect?tab=Overview> and the Connect documentation at <https://docs.rstudio.com/connect/admin/authentication/saml-based/okta-saml/#idp-config>.
 
-### **Mapping Sharedrive as a Network Drive**
-
-Upcoming!
-
-<https://www.clouddirect.net/knowledge-base/KB0011543/mapping-a-sharepoint-site-as-a-network-drive>
 
 ### **Content Level Access Through Microsoft365R**
 
@@ -198,3 +193,15 @@ Microsoft resources can be used for hosting content in pins format that can then
 
     # Read a pin
     test <- board %>% pin_read("iris")
+
+
+
+### **Mapping Sharedrive as a Network Drive**
+
+Upcoming!
+
+<https://www.clouddirect.net/knowledge-base/KB0011543/mapping-a-sharepoint-site-as-a-network-drive>
+
+
+
+
