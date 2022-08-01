@@ -99,14 +99,14 @@ Example:
 
 #### **Service principal/Client secret Embedded authentication**
 
-Content in a non-interactive context (IE scheduled content for example) won't have a user account available for authentication. In this case using an embedded authentication workflow will be necessary. There are several approaches outlined in <https://cran.r-project.org/web/packages/Microsoft365R/vignettes/scripted.html> but as using a Service Principal via using a Client Secret is the Microsoft recommended approach that will be the approach detailed in this article.
+Content in a non-interactive context (IE scheduled content for example) won't have a user account available for authentication. In this case using an embedded authentication workflow will be necessary. There are several approaches outlined in <https://cran.r-project.org/web/packages/Microsoft365R/vignettes/scripted.html>, with the Service Principal via using a Client Secret being the Microsoft recommended approach. 
 
 The Azure application being used for access needs application level permissions. The permissions can be based off of the user permissions documented at <https://github.com/Azure/Microsoft365R/blob/master/inst/app_registration.md> but can be assigned as needed for the application and to comply with any restrictions from the IT administration.
 
 Application permissions are more powerful than user permissions so it is important to emphasize that exposing the client secret directly should be avoided. Instead adding the client secret through an environmental variable is recommended. Starting with version 1.6, RStudio Connect allows [Environment Variables](https://docs.rstudio.com/connect/admin/security-and-auditing/#application-environment-variables) to be saved at the application level. The variables are encrypted on-disk, and in-memory.
 
 -   This can be done at the application level with [deployment](https://db.rstudio.com/best-practices/deployment/) through the [Connect UI](https://support.rstudio.com/hc/en-us/articles/228272368-Managing-your-content-in-RStudio-Connect) or at the [server level with support from the Connect administrator](https://support.rstudio.com/hc/en-us/articles/360016606613-Environment-variables-on-RStudio-Connect)
--   Additional Microsoft supported R packages might be useful, as shown in the below example, in order to remove any interactive elements when calling functions.
+-   Additional Microsoft supported R packages are useful, as shown in the below example, in order to remove any interactive elements when calling functions.
 
 Example:
 
@@ -158,9 +158,9 @@ The Service principal/Client secret Embedded authentication approach discussed a
 This method does not require application level permissions and instead uses a user account or a service account for gaining access via a scripted command. Username / password should be embedded as environmental variables so that they are never exposed in the code directly. Starting with version 1.6, RStudio Connect allows [Environment Variables](https://docs.rstudio.com/connect/admin/security-and-auditing/#application-environment-variables) to be saved at the application level. The variables are encrypted on-disk, and in-memory.
 
 -   This can be done at the application level with [deployment](https://db.rstudio.com/best-practices/deployment/) through the [Connect UI](https://support.rstudio.com/hc/en-us/articles/228272368-Managing-your-content-in-RStudio-Connect) or at the [server level with support from the Connect administrator](https://support.rstudio.com/hc/en-us/articles/360016606613-Environment-variables-on-RStudio-Connect)
--   Additional Microsoft supported R packages might be useful, as shown in the below example, in order to remove any interactive elements when calling functions.
+-   Additional Microsoft supported R packages are useful, as shown in the below example, in order to remove any interactive elements when calling functions.
 
-An additional recommendation is to create a service account rather than using a users username and password for authentication. This could be done as a user or by your administrator. The discussion on the [Using Microsoft365R in an unattended script](https://cran.r-project.org/web/packages/Microsoft365R/vignettes/scripted.html) vignette articulates the key points but in addition to the points made in the vignette it is worth adding the point that having a service account dedicated to a specific content application enables rapid troubleshooting as needed.
+An additional recommendation is to create a service account rather than using a users username and password for authentication. This could be done as a user or by your administrator. The discussion on the [Using Microsoft365R in an unattended script](https://cran.r-project.org/web/packages/Microsoft365R/vignettes/scripted.html) vignette articulates clearly the key points and I recommend reading the article. In addition to the points made in the vignette it is worth adding that having a service account dedicated to a specific content application enables rapid troubleshooting as an administrator or a publisher of multiple pieces of content that can otherwise be much more challenging. 
 
 Example:
 
