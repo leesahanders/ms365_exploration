@@ -9,7 +9,7 @@ Use of Microsoft products at the enterprise level is common. However getting tha
 
 In particular the scope of this article will cover: 
 
-1.  Authentication to Microsoft (Azure)
+1.  Authentication to Microsoft Online
 2.  Pulling and pushing data
 
 ## Outline
