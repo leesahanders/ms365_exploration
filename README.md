@@ -29,21 +29,17 @@ Before diving into discussion and examples for the different authentication opti
 
 ### **Authentication: Microsoft365R**
 
-The Microsoft supported method for authentication is through use of the [Microsoft365R](https://github.com/Azure/Microsoft365R) package.
+The Microsoft supported method for authentication is through use of the [Microsoft365R](https://github.com/Azure/Microsoft365R) package which was developed by Hong Ooi. 
 
-Documentation for Microsoft365R is very thorough and can be accessed at <https://github.com/Azure/Microsoft365R> and <https://cran.r-project.org/web/packages/Microsoft365R/> with the scopes detailed here: <https://github.com/Azure/Microsoft365R/blob/master/inst/app_registration.md>
+Documentation for Microsoft365R is very thorough and can be accessed at [1](<https://github.com/Azure/Microsoft365R>) and [2](<https://cran.r-project.org/web/packages/Microsoft365R/>) with the scopes detailed [here]( <https://github.com/Azure/Microsoft365R/blob/master/inst/app_registration.md>). Microsoft365R was announced in the [Community forums](https://community.rstudio.com/t/microsoft365r-interface-to-microsoft-365-sharepoint-onedrive-etc/94287) and additional useful discussion can be found there as well as other users of the package. 
 
-Microsoft365R was first announced in the [Community forums](https://community.rstudio.com/t/microsoft365r-interface-to-microsoft-365-sharepoint-onedrive-etc/94287).
+Authentication to Microsoft is handled through Microsoft's Azure cloud platform ('Azure Active Directory') with the creation of an application and assigning different levels of permissions in order to obtain 'Oath' 2.0 tokens. Broadly speaking the authentication options can be split into three approaches:
 
-Broadly speaking the authentication methodology can be split into two approaches:
-
--   A user sign-in flow (via redirect url and user permissions)
+-   A user sign-in flow (via redirect url and user permissions, or with a device code needing user permissions and the enabling of mobile and desktop flows)
 -   Service principal/Client secret Embedded authentication (via client service and application permissions)
 -   Embedded user / service account credentials (via embedding account username and password and user permissions)
 
-Sharepoint Online is part of the Microsoft 365 ecosystem with access controlled through Azure as an Application. While the scope of this article is specific to data stored in Sharepoint Online this approach and package supports the entire Microsoft Ecosystem including Outlook, Teams, etc.
-
-It is worth noting that for both options support from the Microsoft administrator will likely be needed (for creating applications, adding user/application permissions, redirect URI's).
+It is worth noting that for the options listed above support from the Microsoft administrator will likely be needed (for creating applications, adding user/application permissions, redirect URI's).
 
 #### **User Sign-In Authentication**
 
@@ -99,7 +95,7 @@ Example:
 
 #### **Service principal/Client secret Embedded authentication**
 
-Content in a non-interactive context (IE scheduled content for example) won't have a user account available for authentication. In this case using an embedded authentication workflow will be necessary. There are several approaches outlined in <https://cran.r-project.org/web/packages/Microsoft365R/vignettes/scripted.html>, with the Service Principal via using a Client Secret being the Microsoft recommended approach. 
+Content in a non-interactive context (IE scheduled content for example) won't have a user account available for authentication. There are several approaches outlined in <https://cran.r-project.org/web/packages/Microsoft365R/vignettes/scripted.html>, with the Service Principal via using a Client Secret discussed in this section being the Microsoft recommended approach. 
 
 The Azure application being used for access needs application level permissions. The permissions can be based off of the user permissions documented at <https://github.com/Azure/Microsoft365R/blob/master/inst/app_registration.md> but can be assigned as needed for the application and to comply with any restrictions from the IT administration.
 
