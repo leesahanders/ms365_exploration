@@ -5,12 +5,12 @@
 
 ## Background 
 
-Use of Microsoft products at the enterprise level is not uncommon. However getting that stored data from the Microsoft online resources into the RStudio IDE and pro products is different from the general recommended approaches of storing that information in databases. Below this article goes through the steps with copious examples using Sharepoint Online for how to:
+Use of Microsoft products at the enterprise level is common. However getting that stored data from the Microsoft online resources into the RStudio IDE and pro products is different from the general recommended approaches where data has been stored in databases. Below this article goes through different methods with copious examples using Sharepoint Online. 
 
-1.  Authenticate to Microsoft (Azure)
-2.  Pull and push data
+In particular the scope of this article will cover: 
 
-The distinction to emphasize is the approach options for interactive content (where a user / viewer is available for pass-through authentication or interactive authentication) versus the approach options for non-interactive content (where content is being run without a user/ viewer available or a user is not available for authenticating to the service). 
+1.  Authentication to Microsoft (Azure)
+2.  Pulling and pushing data
 
 ## Outline
 
@@ -21,6 +21,8 @@ The below outline may be useful for scoping which options are appropriate for pa
 -   Microsoft365R: Embedded authentication (via client service and application permissions, can be used in interactive and non-interactive contexts)
 -   Mapping as a network drive: last resort option
 -   Pins: Useful for creating new pinned caches of data using existing Microsoft online resources for storage and easy retrieval later
+
+The distinction to emphasize is the approach options for interactive content (where a user / viewer is available for pass-through authentication or interactive authentication) versus the approach options for non-interactive content (where content is being run without a user/ viewer available or a user is not available for authenticating to the service). 
 
 Before diving into discussion and examples for the different authentication options there are a few cases not covered in this article that may be useful to list here, as well as recommended resources, for interested readers. 
 
