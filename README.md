@@ -1,6 +1,6 @@
 # ms365_exploration
 
-> :warning: This is a work in progress with various notes on trying to connect the RStudio Pro products with data stored in Sharepoint. Please come back later for this to be updated once I (hopefully) understand something worth sharing. It is possible (likely) that I am misunderstanding capabilities listed below so read at your own risk. Also anything actually well written was probably taken from the documentation from one of the amazing packages I'm playing with - credit where credit is due (Microsoft365R, rsconnect, pins, etc).
+> :warning: This is a work in progress for connecting the RStudio Pro products with data stored in Sharepoint Online (not server). It is possible that I am misunderstanding some capabilities listed below so read at your own risk. Also anything actually well written was probably taken from the documentation from one of the amazing packages I'm playing with - credit where credit is due (Microsoft365R with Hong's amazing documentation, rsconnect, pins, etc).
 
 
 ## Background 
@@ -281,4 +281,11 @@ Example with [board_ms365() from pins](https://pins.rstudio.com/reference/board_
 
     # Read a pin
     test <- board %>% pin_read("iris")
+
+
+
+## Summary
+
+
+
 
