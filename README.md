@@ -258,6 +258,9 @@ Microsoft resources can be used for hosting content in pins format that can then
 
 Example with [board_ms365() from pins](https://pins.rstudio.com/reference/board_ms365.html):
 
+    library(Microsoft365R)
+    library(pins)
+    
     site_url = MySite
     app=MyApp
 
