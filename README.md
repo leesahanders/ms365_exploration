@@ -1,6 +1,6 @@
 # ms365_exploration
 
-> :warning: This is a work in progress for connecting the RStudio Pro products with data stored in Sharepoint Online (not server). It is possible that I am misunderstanding some capabilities listed below so read at your own risk. Also anything actually well written was probably taken from the documentation from one of the amazing packages I'm playing with - credit where credit is due (Microsoft365R with Hong's amazing documentation, rsconnect, pins, etc).
+> :warning: This is a work in progress for connecting the RStudio Pro products with data stored in Sharepoint Online (not server). It is possible that I am misunderstanding some capabilities listed below so read at your own risk. I'm pulling from the various documentation on the packages being used in the below and the original authors deserve credit, especially the incredible package and documentation on Microsoft365R by Hong Ooi - anything well written is probably from his documentation).  
 
 ## Background
 
