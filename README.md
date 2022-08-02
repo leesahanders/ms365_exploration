@@ -284,7 +284,7 @@ One of the advantages of using a language like R is the massive community and in
 Authentication for Microsoft365R is through Microsoft's Azure cloud platform ('Azure Active Directory') through a registered [application](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals) with appropriate assigned permissions in order to obtain 'Oath' 2.0 tokens. Broadly speaking Microsoft365R can be split into three authentication approaches:
 
 | **Method**                            | **auth_type**        | **Privileges** | **Capability**                  |
-|---------------------------------------|----------------------|----------------|---------------------------------|
+|-----------------------|----------------|----------------|-------------------|
 | **User sign-in flow**                 | device_code, default | User           | Interactive only                |
 | **Service principal / Client secret** | client_credentials   | Application    | Interactive and non-interactive |
 | **Embedded credentials**              | resource_owner       | User           | Interactive and non-interactive |
