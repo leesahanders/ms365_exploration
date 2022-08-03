@@ -11,6 +11,29 @@ In particular the scope of this article will cover:
 1.  Authentication to Microsoft Online
 2.  Pulling and pushing data
 
+
+## Summary
+
+One of the advantages of using a language like R is the massive community and industry support for creating packages for integrating with other systems. For example data could be stored in a system like [Microsoft Sharepoint Online](https://www.microsoft.com/en-us/microsoft-365/sharepoint/collaboration). The Microsoft supported method for accessing that data is through use of the [Microsoft365R](https://github.com/Azure/Microsoft365R) package which was developed by Hong Ooi and has extensive documentation. 
+
+Authentication for Microsoft365R is through Microsoft's Azure cloud platform ('Azure Active Directory') through a registered [application](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals) with appropriate assigned permissions in order to obtain 'Oath' 2.0 tokens. Broadly speaking Microsoft365R can be split into three authentication approaches:
+
+| **Method**                            | **auth_type**        | **Privileges** | **Capability**                  |
+|---------------------------------------|----------------------|----------------|---------------------------------|
+| **User sign-in flow**                 | device_code, default | User           | Interactive only                |
+| **Service principal / Client secret** | client_credentials   | Application    | Interactive and non-interactive (scheduled) |
+| **Embedded credentials**              | resource_owner       | User           | Interactive and non-interactive (scheduled) |
+
+Use of the Microsoft developed package [AzureAuth](https://github.com/Azure/AzureAuth) may be needed for fully removing console prompt elements so a script can be run in a non-interactive context, for example by explicitly defining the token directory with `AzureAuth::create_AzureR_dir()`. 
+
+Additional options will need to be enabled depending on the authentication approach (for example: native client, mobile and desktop flows, Redirect URL's, or client secrets), with details in the documentation. RStudio Connect allows [Environment Variables](https://docs.rstudio.com/connect/admin/security-and-auditing/#application-environment-variables) to be saved at the application level for sensitive login parameters (such as username and password or client secrets). The variables are encrypted on-disk, and in-memory. It is worth noting that support from the local Microsoft administrator will likely be needed. 
+
+For adding Redirect URL's, which will give a typical web-app authentication experience for interactive applications: 
+
+- For the desktop RStudio IDE the URL is: `http://localhost:1410/`.
+- For content hosted in shinyapps.io this would be of the form `https://youraccount.shinyapps.io/appname` (including the port number if specified).
+- Typically a SSL certificate will be required for non-local connections, including for Microsoft Azure. This means that the Connect and Workbench URL's will need to be HTTPS. A wildcard could be used instead of adding the Redirect URL for each piece of content/user where appropriate for server-wide access. 
+
 ## Outline
 
 The below outline may be useful for scoping which options are appropriate for particular use cases, and deciding on a method to use within your organization or particular piece of content being developed.
@@ -146,6 +169,7 @@ Example:
 
     data <- DownloadSharepointFile()
 
+
 #### **Embedded user / service account credentials**
 
 User level permissions will need to be assigned as detailed in <https://github.com/Azure/Microsoft365R/blob/master/inst/app_registration.md>.
@@ -280,24 +304,3 @@ Example with [board_ms365() from pins](https://pins.rstudio.com/reference/board_
     # Read a pin
     test <- board %>% pin_read("iris")
 
-## Summary
-
-One of the advantages of using a language like R is the massive community and industry support for creating packages for integrating with other systems. For example data could be stored in a system like [Microsoft Sharepoint Online](https://www.microsoft.com/en-us/microsoft-365/sharepoint/collaboration). The Microsoft supported method for accessing that data is through use of the [Microsoft365R](https://github.com/Azure/Microsoft365R) package which was developed by Hong Ooi and has extensive documentation. 
-
-Authentication for Microsoft365R is through Microsoft's Azure cloud platform ('Azure Active Directory') through a registered [application](https://docs.microsoft.com/en-us/azure/active-directory/develop/app-objects-and-service-principals) with appropriate assigned permissions in order to obtain 'Oath' 2.0 tokens. Broadly speaking Microsoft365R can be split into three authentication approaches:
-
-| **Method**                            | **auth_type**        | **Privileges** | **Capability**                  |
-|---------------------------------------|----------------------|----------------|---------------------------------|
-| **User sign-in flow**                 | device_code, default | User           | Interactive only                |
-| **Service principal / Client secret** | client_credentials   | Application    | Interactive and non-interactive (scheduled) |
-| **Embedded credentials**              | resource_owner       | User           | Interactive and non-interactive (scheduled) |
-
-Use of the Microsoft developed package [AzureAuth](https://github.com/Azure/AzureAuth) may be needed for fully removing console prompt elements so a script can be run in a non-interactive context, for example by explicitly defining the token directory with `AzureAuth::create_AzureR_dir()`. 
-
-Additional options will need to be enabled depending on the authentication approach (for example: native client, mobile and desktop flows, Redirect URL's, or client secrets), with details in the documentation. RStudio Connect allows [Environment Variables](https://docs.rstudio.com/connect/admin/security-and-auditing/#application-environment-variables) to be saved at the application level for sensitive login parameters (such as username and password or client secrets). The variables are encrypted on-disk, and in-memory. It is worth noting that support from the local Microsoft administrator will likely be needed. 
-
-For adding Redirect URL's, which will give a typical web-app authentication experience for interactive applications: 
-
-- For the desktop RStudio IDE the URL is: `http://localhost:1410/`.
-- For content hosted in shinyapps.io this would be of the form `https://youraccount.shinyapps.io/appname` (including the port number if specified).
-- Typically a SSL certificate will be required for non-local connections, including for Microsoft Azure. This means that the Connect and Workbench URL's will need to be HTTPS. A wildcard could be used instead of adding the Redirect URL for each piece of content/user where appropriate for server-wide access. 
