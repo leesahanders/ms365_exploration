@@ -5,24 +5,22 @@ library(shiny)
 library(DT)
 library(spsComps)
 
-tenant = "b721d4a7-5012-49a6-8574-c2d52e59001b"
+tenant = Sys.getenv("EXAMPLE_TENANT", "")
+app=Sys.getenv("EXAMPLE_APP", "")
 site_url = "https://rstudioinc.sharepoint.com/sites/integrations-testing"
-app="29f4ba1e-3dd5-4f97-a94f-98c68497a9cc"
-drive_name = "Documents"
+drive_name = "Documents" 
 file_src = "penguins_raw.csv"
 
-# # - you should NEVER put secrets in code and instead do client_secret <- Sys.getenv("EXAMPLE_SHINY_CLIENT_SECRET", "")
+# Add sensitive variables as environmental variables so they aren't exposed
 client_secret <- Sys.getenv("EXAMPLE_SHINY_CLIENT_SECRET", "")
 
+# Create auth token cache directory, otherwise it will prompt the user on the console for input
+create_AzureR_dir()
+
 foo <- function() {
-  message("Starting Microsoft Graph login and data pull")
+  message("Microsoft Graph login and data pull")
   
-  #The Azure Active Directory tenant for which to obtain a login client. Can be a name ("myaadtenant"), a fully qualified domain name ("myaadtenant.onmicrosoft.com" or "mycompanyname.com"), or a GUID. The default is to login via the "common" tenant, which will infer your actual tenant from your credentials.
-  # Refer to: https://rdrr.io/github/Azure/AzureAuth/man/AzureR_dir.html
-  create_AzureR_dir()
-  
-  # create a Microsoft Graph login
-  # Refer to: https://cran.r-project.org/web/packages/Microsoft365R/vignettes/scripted.html
+  # Create a Microsoft Graph login
   gr <- create_graph_login(tenant, app, password=client_secret, auth_type="client_credentials")
   
   # Sharepoint site
@@ -40,7 +38,7 @@ foo <- function() {
   return(data)
 }
 
-#runApp(shinyApp(
+
 ui = fluidPage(
   actionButton("btn1", "Log into Azure and Show Sharepoint File"),
   DT::dataTableOutput("table1")
@@ -51,15 +49,14 @@ server = function(input,output, session) {
   rv <- reactiveValues()
   rv$data <- NULL
   
-  #btn
+  #btn1
   observeEvent(input$btn1, {
     showNotification("btn1: Running")
     spsComps::shinyCatch({
       rv$data <- foo()
     },
-    # blocking recommended
     blocking_level = "error",
-    prefix = "My-project" #change console prefix if you don't want "SPS"
+    prefix = "My-project" 
     )
   })
   
