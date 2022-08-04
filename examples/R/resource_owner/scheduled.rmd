@@ -4,12 +4,11 @@ output: html_document
 date: '2022-07-25'
 ---
 
-Example using Client Credentials / Client Secret Flow as described in the 'Service Principal' section in https://cran.r-project.org/web/packages/Microsoft365R/vignettes/scripted.html 
+Example using Resource Owner Flow as described in the 'Service Account' section in https://cran.r-project.org/web/packages/Microsoft365R/vignettes/scripted.html 
 
 Authentication and requirements from Azure side (app set up) described in https://cran.r-project.org/web/packages/AzureGraph/vignettes/auth.html 
 
 Access to Sharepoint and how to use the various functions described under `Creating a custom app registration` in https://cran.r-project.org/web/packages/Microsoft365R/vignettes/od_sp.html and the API permissions listed under https://github.com/Azure/Microsoft365R/blob/master/inst/app_registration.md
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -17,7 +16,11 @@ knitr::opts_chunk$set(echo = TRUE)
 library(AzureAuth)
 library(AzureGraph)
 library(Microsoft365R)
+library(shiny)
 library(DT)
+library(shinyjs)
+library(spsComps)
+
 ```
 
 
@@ -26,20 +29,26 @@ library(DT)
 tenant = Sys.getenv("EXAMPLE_TENANT", "")
 app=Sys.getenv("EXAMPLE_APP", "")
 site_url = "https://rstudioinc.sharepoint.com/sites/integrations-testing"
-drive_name = "Documents" 
+drive_name = "Documents"
 file_src = "penguins_raw.csv"
 
 # Add sensitive variables as environmental variables so they aren't exposed
-client_secret <- Sys.getenv("EXAMPLE_SHINY_CLIENT_SECRET", "")
-
+user <- Sys.getenv("EXAMPLE_MS365R_SERVICE_USER")
+pwd <- Sys.getenv("EXAMPLE_MS365R_SERVICE_PASSWORD")
+  
 # Create auth token cache directory, otherwise it will prompt the user on the console for input
 create_AzureR_dir()
 
 foo <- function() {
   message("Microsoft Graph login and data pull")
   
-  # Create a Microsoft Graph login
-  gr <- create_graph_login(tenant, app, password=client_secret, auth_type="client_credentials")
+
+  
+  # create a Microsoft Graph login
+  gr <- create_graph_login(tenant, app, 
+                           username = user, 
+                           password = pwd,
+                           auth_type="resource_owner")
 
   # Sharepoint site
   site <- gr$get_sharepoint_site(site_url)

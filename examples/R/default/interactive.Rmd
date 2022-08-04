@@ -26,7 +26,7 @@ site_url = "https://rstudioinc.sharepoint.com/sites/integrations-testing"
 drive_name = "Documents"
 file_src = "penguins_raw.csv"
 
-site <- get_sharepoint_site(site_url = site_url, app=app, auth_type="device_code")
+site <- get_sharepoint_site(site_url = site_url, app=app)
 
 doclib <- site$get_drive()
 ```
