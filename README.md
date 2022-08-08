@@ -1,6 +1,6 @@
 # ms365_exploration
 
-> :warning: This is a work in progress for understanding the options for connecting the RStudio Pro products with data stored in Sharepoint Online (not server). This is a personal repo and as such might change without notice (though if you needed anything feel free to email me at [lisa.anders\@rstudio.com](mailto:lisa.anders@rstudio.com){.email} and I'll do my best to help recover it). Huge thanks to Hong Ooi and his fantastic documentation on Microsoft365R.
+> :warning: This is a work in progress for understanding the options for connecting the RStudio Pro products with data stored in Sharepoint Online (not server). This is a personal repo and as such might change without notice (though if you needed anything feel free to email me at lisa.anders@rstudio.com and I'll do my best to help recover it). Huge thanks to Hong Ooi and his fantastic documentation on Microsoft365R.
 
 ## Background
 
@@ -40,7 +40,7 @@ Enabling the device code workflow is though the App Registration dashboard in Az
 
 **Service principal / Client secret**
 
-A custom app will need to be registered in Azure with Application permissions. The permissions can be based off of the [user permissions](https://github.com/Azure/Microsoft365R/blob/master/inst/app_registration.md) but can be assigned as needed for the application and to comply with any security restrictions.
+A custom app will need to be registered in Azure with Application permissions. The permissions can be based off of the [user permissions](https://github.com/Azure/Microsoft365R/blob/master/inst/app_registration.md) but can be assigned as needed for the application and to comply with any security restrictions. This method enables scheduled content. 
 
 Application permissions are more powerful than user permissions so it is important to emphasize that exposing the client secret directly should be avoided. As a control using environmental variable's for storing the client secret is recommended. Starting with version 1.6, RStudio Connect allows [Environment Variables](https://docs.rstudio.com/connect/admin/security-and-auditing/#application-environment-variables) to be saved at the application level. The variables are encrypted on-disk, and in-memory.
 
@@ -48,10 +48,16 @@ Application permissions are more powerful than user permissions so it is importa
 
 **Embedded credentials**
 
+Alternative to the Service principal / Client secret method the embedded credentials approach can be used. This can use a specific user's credentials, either a developer or a service account, for authentication through the script to enable scheduled content. 
+
 A custom app can be created or the default app registration `d44a05d5-c6a5-4bbb-82d2-443123722380` that comes with the [Microsoft365R](https://github.com/Azure/Microsoft365R) package can be used. The user permissions will need to be enabled as specified in [the app registrations page](https://github.com/Azure/Microsoft365R/blob/master/inst/app_registration.md). Depending on your organizations security policy access to your tenant may need to be granted by an Azure Global Administrator.
 
- - Working with your Microsoft administrator to create service accounts per content can be useful to enable fast troubleshooting and easier collaboration on content with multiple developers is recommended. 
+ - Working with your Microsoft administrator to create service accounts per content is recommended to enable fast troubleshooting and easier collaboration on content with multiple developers is recommended. 
+ 
+Sensitive variables such as Username / password should be embedded as environmental variables so that they aren't exposed in the code directly. Starting with version 1.6, RStudio Connect allows [Environment Variables](https://docs.rstudio.com/connect/admin/security-and-auditing/#application-environment-variables) to be saved at the application level. The variables are encrypted on-disk, and in-memory.
 
+ - This can be done at the application level with [deployment](https://db.rstudio.com/best-practices/deployment/) through the [Connect UI](https://support.rstudio.com/hc/en-us/articles/228272368-Managing-your-content-in-RStudio-Connect). 
+ 
 ## Authentication Examples
 
 The Microsoft supported method for authentication is through use of the [Microsoft365R](https://github.com/Azure/Microsoft365R) package which was developed by Hong Ooi.
