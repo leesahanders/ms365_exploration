@@ -2,11 +2,6 @@
 
 > :warning: This is a work in progress for understanding the options for connecting the RStudio Pro products with data stored in SharePoint Online (the Microsoft 365 ecosystem). This is a personal repo and as such might change without notice (though if you needed anything feel free to email me at lisa.anders@rstudio.com and I'll do my best to help recover it). Readers should refer to the [Microsoft365R package documentation](https://github.com/Azure/Microsoft365R) developed by [Hong Ooi](https://github.com/hongooi73) for up-to-date information. 
 
-# Microsoft 365
-
-!!! Note 
-    Disclaimer: This page discusses a Microsoft developed open source package and was correct as of the date of writing on 8/10/2022. Readers should refer to the [Microsoft365R package documentation](https://github.com/Azure/Microsoft365R) developed by [Hong Ooi](https://github.com/hongooi73) for up-to-date information. 
-
 ## Introduction
 
 Microsoft 365 is a subscription extension of the Microsoft Office product line with cloud hosting support. Microsoft 365 uses Azure Active Directory (Azure AD) for user authentication and application access through developed APIs. The Microsoft supported method for interfacing with R developed content is with the [Microsoft365R](https://github.com/Azure/Microsoft365R) package which was developed by Hong Ooi and has extensive documentation. It supports access to Teams, SharePoint Online, Outlook, and OneDrive.
