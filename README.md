@@ -97,6 +97,7 @@ Content in a non-interactive context (such as scheduled reports) won't have a us
 
 ```
 library(AzureAuth)
+library(AzureGraph)
 library(Microsoft365R)
 
 tenant = MyTenant
@@ -126,6 +127,7 @@ Content in a non-interactive context (such as scheduled reports) won't have a us
 
 ```
 library(AzureAuth)
+library(AzureGraph)
 library(Microsoft365R)
 
 tenant = MyTenant
@@ -171,6 +173,7 @@ The authentication method used in this example could be swapped out for any of t
 
 ```
 library(Microsoft365R)
+library(AzureGraph)
 library(AzureAuth)
 
 site_url = MySharepointSiteURL
