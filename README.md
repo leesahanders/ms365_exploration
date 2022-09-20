@@ -1,6 +1,6 @@
 # ms365_exploration
 
-> :warning: This is a work in progress for understanding the options for connecting the RStudio Pro products with data stored in SharePoint Online (the Microsoft 365 ecosystem). This is a personal repo and as such might change without notice (though if you needed anything feel free to email me at lisa.anders@rstudio.com and I'll do my best to help recover it). Readers should refer to the [Microsoft365R package documentation](https://github.com/Azure/Microsoft365R) developed by [Hong Ooi](https://github.com/hongooi73) for up-to-date information. 
+> :warning: This is now outdated. Please refer to [this article](https://solutions.rstudio.com/r/data/microsoft365/) and the [Microsoft365R package documentation](https://github.com/Azure/Microsoft365R) developed by [Hong Ooi](https://github.com/hongooi73) instead for up-to-date information. 
 
 ## Introduction
 
